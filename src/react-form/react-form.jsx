@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./react-form.scss";
 import ReactImg from "../react.png";
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./react-form.scss";
+import ReactImg from "../react.png";
 
 const ReactForm = () => {
   const initialValues = { username: "", email: "", password: "" };
@@ -21,7 +22,10 @@ const ReactForm = () => {
   return (
     <>
       {/* Section: Split screen */}
-      <h1 className="text-center mt-4 mb-4">React Form</h1>
+      <div className="text-center">
+        <img src={ReactImg} alt="Image" />
+        <h1 className=" mt-4 mb-4">React Form</h1>
+      </div>
       <section className="">
         <div className="container-fluid px-4 py-2">
           <div className="row">

@@ -37,8 +37,6 @@ const ReactForm = () => {
     console.log(newData);
   };
 
-  useEffect(() => {}, [submittedData]);
-
   return (
     <>
       {/* Section: Split screen */}

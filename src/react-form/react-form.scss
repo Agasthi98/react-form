@@ -4,3 +4,15 @@
 .error {
   color: red;
 }
+.img {
+  animation: rotation 8s linear infinite;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

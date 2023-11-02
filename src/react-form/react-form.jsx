@@ -35,6 +35,11 @@ const ReactForm = () => {
       console.log("Form not submitted. Please check the form data.");
     }
 
+    if (submittedData.some((item) => item.email === formData.email)) {
+      alert("Email already exists");
+      return;
+    }
+
     if (
       formData.username === "" &&
       formData.email === "" &&
@@ -149,10 +154,12 @@ const ReactForm = () => {
                 <tbody>
                   {submittedData.map((data, index) => (
                     <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      <td>{data.username}</td>
-                      <td>{data.email}</td>
-                      <td>{data.password}</td>
+                      <th scope="row" className="align-middle">
+                        {index + 1}
+                      </th>
+                      <td className="align-middle">{data.username}</td>
+                      <td className="align-middle">{data.email}</td>
+                      <td className="align-middle">{data.password}</td>
                       <td>
                         <button
                           type="button"

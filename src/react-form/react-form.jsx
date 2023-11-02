@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "./react-form.scss";
 import ReactImg from "../react.png";
+import Validation from "./validation.js";
 
 const ReactForm = () => {
   const [submittedData, setSubmittedData] = useState([]);
+  const [errors, setError] = useState({});
 
   const initialValues = { username: "", email: "", password: "" };
   const [formData, setFormData] = useState(initialValues);
@@ -18,13 +20,25 @@ const ReactForm = () => {
   }
   const handleSubmit = (event) => {
     event.preventDefault();
+    setError(Validation(formData));
+    if (
+      formData.username === "" &&
+      formData.email === "" &&
+      formData.password === ""
+    ) {
+      console.log("empty");
+      return false;
+    } else if (!errors.username && !errors.email && !errors.password) {
+      console.log("errors");
+      return false;
+    } else {
+      console.log(formData);
 
-    console.log(formData);
+      setSubmittedData((data) => [...data, formData]);
+      console.log(submittedData);
 
-    setSubmittedData((data) => [...data, formData]);
-    console.log(submittedData);
-
-    setFormData(initialValues);
+      setFormData(initialValues);
+    }
   };
 
   {
@@ -58,8 +72,10 @@ const ReactForm = () => {
                     placeholder="John DSoe"
                     value={formData.username}
                     onChange={handleChange}
-                    required
                   />
+                  {errors.username && (
+                    <div style={{ color: "red" }}>{errors.username}</div>
+                  )}
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Email</label>
@@ -70,9 +86,11 @@ const ReactForm = () => {
                     placeholder="name@example.com"
                     value={formData.email}
                     onChange={handleChange}
-                    required
                   />
                 </div>
+                {errors.email && (
+                  <div style={{ color: "red" }}>{errors.email}</div>
+                )}
                 <div className="mb-3">
                   <label className="form-label">Password</label>
                   <input
@@ -82,8 +100,10 @@ const ReactForm = () => {
                     placeholder="Password"
                     value={formData.password}
                     onChange={handleChange}
-                    required
                   />
+                  {errors.password && (
+                    <div style={{ color: "red" }}>{errors.password}</div>
+                  )}
                 </div>
 
                 <button type="submit" className="btn btn-success">

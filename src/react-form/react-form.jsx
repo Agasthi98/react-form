@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./react-form.scss";
 import ReactImg from "../react.png";
-import Validation from "./validation.js";
+import bcrypt from "bcryptjs";
 
 const ReactForm = () => {
   const [submittedData, setSubmittedData] = useState([]);
@@ -9,6 +9,13 @@ const ReactForm = () => {
 
   const initialValues = { username: "", email: "", password: "" };
   const [formData, setFormData] = useState(initialValues);
+
+  const validateForm = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isEmailValid = emailRegex.test(formData.email);
+    const isPasswordValid = formData.password.length >= 8;
+    return isEmailValid && isPasswordValid;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,7 +27,14 @@ const ReactForm = () => {
   }
   const handleSubmit = (event) => {
     event.preventDefault();
-    setError(Validation(formData));
+
+    if (validateForm()) {
+      // Submit the form or perform other actions
+      console.log("Form submitted with valid data:", formData);
+    } else {
+      console.log("Form not submitted. Please check the form data.");
+    }
+
     if (
       formData.username === "" &&
       formData.email === "" &&
@@ -28,17 +42,21 @@ const ReactForm = () => {
     ) {
       console.log("empty");
       return false;
-    } else if (!errors.username && !errors.email && !errors.password) {
-      console.log("errors");
-      return false;
-    } else {
-      console.log(formData);
-
-      setSubmittedData((data) => [...data, formData]);
-      console.log(submittedData);
-
-      setFormData(initialValues);
     }
+    console.log(bcrypt.hashSync(formData.password, 1));
+
+    const hashedPassword = bcrypt.hashSync(formData.password, 1);
+    setSubmittedData((data) => [
+      ...data,
+      {
+        username: formData.username,
+        email: formData.email,
+        password: hashedPassword,
+      },
+    ]);
+    console.log(submittedData);
+
+    setFormData(initialValues);
   };
 
   {
@@ -51,6 +69,7 @@ const ReactForm = () => {
     console.log(newData);
   };
 
+  const isFormValid = validateForm();
   return (
     <>
       {/* Section: Split screen */}
@@ -106,7 +125,11 @@ const ReactForm = () => {
                   )}
                 </div>
 
-                <button type="submit" className="btn btn-success">
+                <button
+                  disabled={!isFormValid}
+                  type="submit"
+                  className="btn btn-success"
+                >
                   Success
                 </button>
               </form>

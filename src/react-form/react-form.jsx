@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./react-form.scss";
 import ReactImg from "../react.png";
 import bcrypt from "bcryptjs";
+import Validation from "./validation";
 
 const ReactForm = () => {
   const [submittedData, setSubmittedData] = useState([]);
@@ -9,13 +10,6 @@ const ReactForm = () => {
 
   const initialValues = { username: "", email: "", password: "" };
   const [formData, setFormData] = useState(initialValues);
-
-  const validateForm = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isEmailValid = emailRegex.test(formData.email);
-    const isPasswordValid = formData.password.length >= 8;
-    return isEmailValid && isPasswordValid;
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +22,7 @@ const ReactForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (validateForm()) {
+    if (Validation(formData)) {
       // Submit the form or perform other actions
       console.log("Form submitted with valid data:", formData);
     } else {
@@ -74,7 +68,7 @@ const ReactForm = () => {
     console.log(newData);
   };
 
-  const isFormValid = validateForm();
+  const isFormValid = Validation(formData);
   return (
     <>
       {/* Section: Split screen */}

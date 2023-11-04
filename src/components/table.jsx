@@ -1,6 +1,7 @@
 import React from "react";
+import propTypes from "prop-types";
 
-const Table = ({ dataSubmit }) => {
+const Table = ({ dataSubmit, deleteItem }) => {
   return (
     <>
       <table className="table table-striped">
@@ -15,7 +16,7 @@ const Table = ({ dataSubmit }) => {
         </thead>
         <tbody>
           {dataSubmit.map((data, index) => (
-            <tr key={index}>
+            <tr key={data.id}>
               <th scope="row" className="align-middle">
                 {index + 1}
               </th>
@@ -23,7 +24,11 @@ const Table = ({ dataSubmit }) => {
               <td className="align-middle">{data.formData.email}</td>
               <td className="align-middle">{data.formData.password}</td>
               <td>
-                <button type="button" className="btn btn-danger">
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => deleteItem(data.id)}
+                >
                   Delete
                 </button>
               </td>
@@ -33,6 +38,16 @@ const Table = ({ dataSubmit }) => {
       </table>
     </>
   );
+};
+
+Table.propTypes = {
+  dataSubmit: propTypes.array.isRequired,
+  deleteItem: propTypes.string,
+};
+
+Table.defaultProps = {
+  dataSubmit: ["1", "name"],
+  deleteItem: "1",
 };
 
 export default Table;

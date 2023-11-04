@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "../styles/react-form.scss";
 import ReactImg from "../react.png";
-import bcrypt from "bcryptjs";
 import { Validations } from "./validation";
-import { addTask } from "./controllers";
+import { addFormData, deleteFromTable } from "./controllers";
 import Table from "./table";
 
 const ReactForm = () => {
@@ -28,7 +27,7 @@ const ReactForm = () => {
     if (!formData.username || !formData.email || !formData.password) {
       setError(Validations(formData));
     } else {
-      addTask(
+      addFormData(
         formData,
         submittedData,
         setSubmittedData,
@@ -41,11 +40,9 @@ const ReactForm = () => {
   {
     /** Delete handler */
   }
-  const deleteHandler = (index) => {
-    console.log(index);
-    const newData = submittedData.filter((data, i) => i !== index);
-    setSubmittedData(newData);
-    console.log(newData);
+  const deleteHandler = (id) => {
+    console.log(id);
+    deleteFromTable(id, submittedData, setSubmittedData);
   };
 
   // const isFormValid = Validation(formData);
@@ -111,7 +108,7 @@ const ReactForm = () => {
             </div>
             {/* Section: Split screen */}
             <div className="col-lg-8 vh-100 ">
-              <Table dataSubmit={submittedData} />
+              <Table dataSubmit={submittedData} deleteItem={deleteHandler} />
             </div>
           </div>
         </div>

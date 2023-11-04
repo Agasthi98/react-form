@@ -1,6 +1,15 @@
 import bcrypt from "bcryptjs";
 
-export const addTask = (
+/**
+ * add form data
+ * @param {*} formData
+ * @param {*} submittedData
+ * @param {*} setSubmittedData
+ * @param {*} setFormData
+ * @param {*} initialValues
+ * @returns
+ */
+export const addFormData = (
   formData,
   submittedData,
   setSubmittedData,
@@ -26,4 +35,12 @@ export const addTask = (
   // console.log(submittedData);
 
   setFormData(initialValues);
+};
+
+export const deleteFromTable = (id, submittedData, setSubmittedData) => {
+  console.log(id, submittedData);
+  const deleteData = submittedData.filter((item) => {
+    return item.id !== id;
+  });
+  setSubmittedData(deleteData);
 };

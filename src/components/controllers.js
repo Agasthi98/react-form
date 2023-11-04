@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-
+import { localStorageName } from "../constants/constants";
 /**
  * add form data
  * @param {*} formData
@@ -37,10 +37,21 @@ export const addFormData = (
   setFormData(initialValues);
 };
 
+/**
+ * Delete method
+ * @param {*} id
+ * @param {*} submittedData
+ * @param {*} setSubmittedData
+ */
 export const deleteFromTable = (id, submittedData, setSubmittedData) => {
   console.log(id, submittedData);
   const deleteData = submittedData.filter((item) => {
     return item.id !== id;
   });
   setSubmittedData(deleteData);
+};
+
+export const setDataToLocalStorage = (submittedData) => {
+  console.log("success");
+  localStorage.setItem(localStorageName, JSON.stringify(submittedData));
 };

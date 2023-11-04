@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/react-form.scss";
 import ReactImg from "../react.png";
 import { Validations } from "./validation";
-import { addFormData, deleteFromTable } from "./controllers";
+import {
+  addFormData,
+  deleteFromTable,
+  setDataToLocalStorage,
+} from "./controllers";
 import Table from "./table";
 
 const ReactForm = () => {
@@ -44,6 +48,10 @@ const ReactForm = () => {
     console.log(id);
     deleteFromTable(id, submittedData, setSubmittedData);
   };
+
+  useEffect(() => {
+    setDataToLocalStorage(submittedData);
+  }, [submittedData]);
 
   // const isFormValid = Validation(formData);
   return (

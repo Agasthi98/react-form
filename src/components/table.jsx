@@ -1,6 +1,7 @@
 import React from "react";
 import propTypes from "prop-types";
 import Message from "./Message";
+import { emptyMessage } from "../constants/constants";
 
 const Table = ({ dataSubmit, deleteItem }) => {
   return (
@@ -40,7 +41,7 @@ const Table = ({ dataSubmit, deleteItem }) => {
             </tbody>
           </table>
         )}
-        {dataSubmit.length < 1 && <Message message="No data added yet" />}
+        {dataSubmit.length < 1 && <Message message={emptyMessage} />}
       </div>
     </>
   );

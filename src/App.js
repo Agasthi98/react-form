@@ -1,5 +1,5 @@
 import "./App.scss";
-import ReactForm from "./react-form/react-form.jsx";
+import ReactForm from "./components/react-form";
 
 function App() {
   return (

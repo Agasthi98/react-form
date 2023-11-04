@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import "./react-form.scss";
+import "../styles/react-form.scss";
 import ReactImg from "../react.png";
 import bcrypt from "bcryptjs";
-import Validation from "./validation";
+import { Validations } from "./validation";
+import { addTask } from "./controllers";
+import Table from "./table";
 
 const ReactForm = () => {
   const [submittedData, setSubmittedData] = useState([]);
@@ -22,40 +24,18 @@ const ReactForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (Validation(formData)) {
-      // Submit the form or perform other actions
-      console.log("Form submitted with valid data:", formData);
+    console.log(!formData.password);
+    if (!formData.username || !formData.email || !formData.password) {
+      setError(Validations(formData));
     } else {
-      console.log("Form not submitted. Please check the form data.");
+      addTask(
+        formData,
+        submittedData,
+        setSubmittedData,
+        setFormData,
+        initialValues
+      );
     }
-
-    if (submittedData.some((item) => item.email === formData.email)) {
-      alert("Email already exists");
-      return;
-    }
-
-    if (
-      formData.username === "" &&
-      formData.email === "" &&
-      formData.password === ""
-    ) {
-      console.log("empty");
-      return false;
-    }
-    console.log(bcrypt.hashSync(formData.password, 1));
-
-    const hashedPassword = bcrypt.hashSync(formData.password, 1);
-    setSubmittedData((data) => [
-      ...data,
-      {
-        username: formData.username,
-        email: formData.email,
-        password: hashedPassword,
-      },
-    ]);
-    console.log(submittedData);
-
-    setFormData(initialValues);
   };
 
   {
@@ -68,7 +48,7 @@ const ReactForm = () => {
     console.log(newData);
   };
 
-  const isFormValid = Validation(formData);
+  // const isFormValid = Validation(formData);
   return (
     <>
       {/* Section: Split screen */}
@@ -124,49 +104,14 @@ const ReactForm = () => {
                   )}
                 </div>
 
-                <button
-                  disabled={!isFormValid}
-                  type="submit"
-                  className="btn btn-success"
-                >
+                <button type="submit" className="btn btn-success">
                   Success
                 </button>
               </form>
             </div>
             {/* Section: Split screen */}
             <div className="col-lg-8 vh-100 ">
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Password</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {submittedData.map((data, index) => (
-                    <tr key={index}>
-                      <th scope="row" className="align-middle">
-                        {index + 1}
-                      </th>
-                      <td className="align-middle">{data.username}</td>
-                      <td className="align-middle">{data.email}</td>
-                      <td className="align-middle">{data.password}</td>
-                      <td>
-                        <button
-                          type="button"
-                          className="btn btn-danger"
-                          onClick={() => deleteHandler(index)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <Table dataSubmit={submittedData} />
             </div>
           </div>
         </div>

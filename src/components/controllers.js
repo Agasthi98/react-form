@@ -51,7 +51,25 @@ export const deleteFromTable = (id, submittedData, setSubmittedData) => {
   setSubmittedData(deleteData);
 };
 
+/**
+ * set submitted data to localstorage
+ * @param {*} submittedData
+ */
 export const setDataToLocalStorage = (submittedData) => {
   console.log("success");
   localStorage.setItem(localStorageName, JSON.stringify(submittedData));
+};
+
+/**
+ * get submitted data from localstorage
+ * @returns g
+ */
+export const getDataFromLocalStorage = () => {
+  const data = localStorage.getItem(localStorageName);
+  console.log(data);
+  if (data) {
+    return JSON.parse(data);
+  } else {
+    return [];
+  }
 };

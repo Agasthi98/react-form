@@ -6,11 +6,12 @@ import {
   addFormData,
   deleteFromTable,
   setDataToLocalStorage,
+  getDataFromLocalStorage,
 } from "./controllers";
 import Table from "./table";
 
 const ReactForm = () => {
-  const [submittedData, setSubmittedData] = useState([]);
+  const [submittedData, setSubmittedData] = useState(getDataFromLocalStorage);
   const [errors, setError] = useState({});
 
   const initialValues = { username: "", email: "", password: "" };

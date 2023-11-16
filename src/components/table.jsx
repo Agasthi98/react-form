@@ -2,6 +2,7 @@ import React from "react";
 import propTypes from "prop-types";
 import Message from "./Message";
 import { emptyMessage } from "../constants/constants";
+import { phoneNoCheck, phoneNumberRender, nameModify } from "./controllers";
 
 const Table = ({ dataSubmit, deleteItem }) => {
   return (
@@ -14,6 +15,8 @@ const Table = ({ dataSubmit, deleteItem }) => {
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Mobile/Land</th>
                 <th scope="col">Password</th>
                 <th scope="col">Action</th>
               </tr>
@@ -24,8 +27,16 @@ const Table = ({ dataSubmit, deleteItem }) => {
                   <th scope="row" className="align-middle">
                     {index + 1}
                   </th>
-                  <td className="align-middle">{data.formData.username}</td>
+                  <td className="align-middle">
+                    {nameModify(data.formData.username)}
+                  </td>
                   <td className="align-middle">{data.formData.email}</td>
+                  <td className="align-middle">
+                    {phoneNumberRender(data.formData.phone)}
+                  </td>
+                  <td className="align-middle">
+                    {phoneNoCheck(data.formData.phone)}
+                  </td>
                   <td className="align-middle">{data.formData.password}</td>
                   <td>
                     <button

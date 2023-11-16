@@ -14,7 +14,7 @@ const ReactForm = () => {
   const [submittedData, setSubmittedData] = useState(getDataFromLocalStorage);
   const [errors, setError] = useState({});
 
-  const initialValues = { username: "", email: "", password: "" };
+  const initialValues = { username: "", email: "", phone: "", password: "" };
   const [formData, setFormData] = useState(initialValues);
 
   const handleChange = (e) => {
@@ -29,7 +29,12 @@ const ReactForm = () => {
     event.preventDefault();
 
     console.log(!formData.password);
-    if (!formData.username || !formData.email || !formData.password) {
+    if (
+      !formData.username ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.password
+    ) {
       setError(Validations(formData));
     } else {
       addFormData(
@@ -89,6 +94,20 @@ const ReactForm = () => {
                     name="email"
                     placeholder="name@example.com"
                     value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
+                {errors.email && (
+                  <div style={{ color: "red" }}>{errors.email}</div>
+                )}
+                <div className="mb-3">
+                  <label className="form-label">Phone</label>
+                  <input
+                    type="text"
+                    className="form-control "
+                    name="phone"
+                    placeholder="+94 776069656"
+                    value={formData.phone}
                     onChange={handleChange}
                   />
                 </div>

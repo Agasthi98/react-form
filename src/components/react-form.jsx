@@ -129,7 +129,11 @@ const ReactForm = () => {
                   )}
                 </div>
 
-                <button type="submit" className="btn btn-success">
+                <button
+                  type="submit"
+                  style={{ width: "100%" }}
+                  className="btn btn-success"
+                >
                   Success
                 </button>
               </form>

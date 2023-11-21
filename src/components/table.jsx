@@ -3,6 +3,7 @@ import propTypes from "prop-types";
 import Message from "./Message";
 import { emptyMessage } from "../constants/constants";
 import { phoneNoCheck, phoneNumberRender, nameModify } from "./controllers";
+import { Button } from "antd";
 
 const Table = ({ dataSubmit, deleteItem }) => {
   return (
@@ -37,15 +38,21 @@ const Table = ({ dataSubmit, deleteItem }) => {
                   <td className="align-middle">
                     {phoneNoCheck(data.formData.phone)}
                   </td>
-                  <td className="align-middle">{data.formData.password}</td>
+                  <td
+                    className="align-middle"
+                    data-toggle="tooltip"
+                    title={data.formData.password}
+                  >
+                    {data.formData.password}
+                  </td>
                   <td>
-                    <button
-                      type="button"
-                      className="btn btn-danger"
+                    <Button
+                      type="primary"
+                      danger
                       onClick={() => deleteItem(data.id)}
                     >
                       Delete
-                    </button>
+                    </Button>
                   </td>
                 </tr>
               ))}
